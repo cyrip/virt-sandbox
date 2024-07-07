@@ -2,3 +2,4 @@
   ansible.builtin.file:
     path: /etc/modprobe.d/kvm-blacklist.conf
     state: absent
+  register: whitelist_result

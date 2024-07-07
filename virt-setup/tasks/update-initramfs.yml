@@ -1,7 +1,9 @@
 - name: Update initramfs
   ansible.builtin.shell: "update-initramfs -u"
   register: update_initramfs_output
+  when: (blacklist_result is defined and blacklist_result.changed) or (whitelist_result is defined and whitelist_result.changed)
 
 - name: Initramfs output
   ansible.builtin.debug:
     var: update_initramfs_output
+  when: (blacklist_result is defined and blacklist_result.changed) or (whitelist_result is defined and whitelist_result.changed)

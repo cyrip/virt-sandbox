@@ -1,5 +1,8 @@
 ---
 # vars file for kvm-setup
+vagrant:
+  enabled: false
+
 kvm:
   enabled: true
   blacklisted_modules:

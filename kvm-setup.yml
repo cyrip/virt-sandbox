@@ -1,0 +1,5 @@
+---
+- name: Run kvm role
+  hosts: kvm_servers
+  roles:
+    - virt-setup

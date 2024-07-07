@@ -19,3 +19,4 @@
     create: true
     mode: '0644'
   loop: "{{ kvm.blacklisted_modules }}"
+  register: blacklist_result
