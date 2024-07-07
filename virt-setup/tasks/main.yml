@@ -10,3 +10,9 @@
   when:
     - kvm.enabled == true
     - vagrant.enabled == false
+
+- name: Install Vagrant
+  ansible.builtin.import_tasks: install-vagrant.yml
+  when:
+    - kvm.enabled == false
+    - vagrant.enabled == true

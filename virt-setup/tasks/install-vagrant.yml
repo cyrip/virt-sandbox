@@ -1,0 +1,45 @@
+- name: Gather package facts for Debian-based systems
+  ansible.builtin.package_facts:
+  when: ansible_os_family == "Debian"    
+
+- name: Check if vagrant is installed
+  ansible.builtin.debug:
+    msg: "Vagrant is installed"
+  when:
+    - ansible_os_family == "Debian"
+    - "'vagrant' in ansible_facts.packages"
+  register: vagrant_installed
+
+- name: Fetch the HashiCorp GPG key
+  ansible.builtin.get_url:
+    url: https://apt.releases.hashicorp.com/gpg
+    dest: /tmp/hashicorp.gpg
+    mode: '0644'
+  when:
+    - "'vagrant' not in ansible_facts.packages"
+
+- name: Add the GPG key to the keyring
+  ansible.builtin.command: >
+    gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg /tmp/hashicorp.gpg
+  when:
+    - "'vagrant' not in ansible_facts.packages"
+
+- name: Remove the temporary GPG key file
+  ansible.builtin.file:
+    path: /tmp/hashicorp.gpg
+    state: absent
+
+- name: Add HashiCorp APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    filename: hashicorp
+    state: present
+
+- name: Update the APT cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Vagrant package is installed
+  ansible.builtin.apt:
+    name: vagrant
+    state: present

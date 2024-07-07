@@ -1,5 +1,5 @@
-- name: Delete /etc/modprobe.d/kvm-blacklist.conf
+- name: Delete /etc/modprobe.d/blacklist-kvm.conf
   ansible.builtin.file:
-    path: /etc/modprobe.d/kvm-blacklist.conf
+    path: /etc/modprobe.d/blacklist-kvm.conf
     state: absent
   register: whitelist_result
