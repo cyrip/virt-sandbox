@@ -1,0 +1,7 @@
+- name: Update initramfs
+  ansible.builtin.shell: "update-initramfs -u"
+  register: update_initramfs_output
+
+- name: Initramfs output
+  ansible.builtin.debug:
+    var: update_initramfs_output

@@ -1,0 +1,8 @@
+- name: Whitelist KVM modules
+  ansible.builtin.import_tasks: whitelist-modules.yml
+
+- name: Update initramfs
+  ansible.builtin.import_tasks: update-initramfs.yml
+
+- name: Enable services
+  ansible.builtin.import_tasks: enable-services.yml

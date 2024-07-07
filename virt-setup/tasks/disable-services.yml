@@ -1,0 +1,11 @@
+- name: Ensure the service is disabled and stopped
+  ansible.builtin.systemd:
+    name: libvirtd
+    enabled: false
+    state: stopped
+
+- name: Ensure the service is disabled and stopped
+  ansible.builtin.systemd:
+    name: virtlogd
+    enabled: false
+    state: stopped

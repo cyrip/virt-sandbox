@@ -1,0 +1,11 @@
+- name: Ensure the libvirtd service is enabled and started
+  ansible.builtin.systemd:
+    name: libvirtd
+    enabled: true
+    state: started
+
+- name: Ensure the virtlogd service is enabled and started
+  ansible.builtin.systemd:
+    name: virtlogd
+    enabled: true
+    state: started

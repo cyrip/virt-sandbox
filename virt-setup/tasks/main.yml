@@ -1,0 +1,10 @@
+---
+# tasks file for kvm-setup
+- name: Disable KVM
+  ansible.builtin.import_tasks: disable-kvm.yml
+  when: kvm.enabled != true
+
+- name: Enable KVM
+  ansible.builtin.import_tasks: enable-kvm.yml
+  when: kvm.enabled != false
+    

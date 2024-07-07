@@ -1,0 +1,21 @@
+- name: Check blacklist file exists
+  ansible.builtin.stat:
+    path: /etc/modprobe.d/kvm-blacklist.conf
+  register: blacklist_file
+
+- name: Create a file if it does not exist
+  ansible.builtin.file:
+    path: /etc/modprobe.d/kvm-blacklist.conf
+    state: touch
+    mode: '0644'
+  register: result
+  when: blacklist_file.exists is defined and not blacklist_file.stat.exists
+
+- name: Ensure that modules are blacklisted in /etc/modprobe.d/kvm-blacklist.conf
+  ansible.builtin.lineinfile:
+    path: /etc/modprobe.d/kvm-blacklist.conf
+    line: "blacklist {{ item }}"
+    state: present
+    create: true
+    mode: '0644'
+  loop: "{{ kvm.blacklisted_modules }}"

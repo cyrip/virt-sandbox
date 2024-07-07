@@ -1,0 +1,8 @@
+---
+# vars file for kvm-setup
+kvm:
+  enabled: true
+  blacklisted_modules:
+  - kvm
+  - kvm_intel
+  - kvm_amd
