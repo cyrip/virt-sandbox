@@ -6,7 +6,7 @@ SETUP_PLAYBOOK = sandbox-setup.yml
 # Ansible targets
 .PHONY: all lint setup
 
-all: lint bootstrap 
+all: lint setup
 
 # Target to run the Ansible playbook
 setup:
