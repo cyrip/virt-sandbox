@@ -1,10 +1,10 @@
 ---
 # vars file for kvm-setup
 vagrant:
-  enabled: true
+  enabled: false
 
 kvm:
-  enabled: false
+  enabled: true
   blacklisted_modules:
   - kvm
   - kvm_intel
