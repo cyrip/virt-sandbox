@@ -1,0 +1,10 @@
+- name: Update the APT package cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install OpenVPN
+  ansible.builtin.apt:
+    name:
+      - openvpn
+      - easy-rsa          
+    state: present

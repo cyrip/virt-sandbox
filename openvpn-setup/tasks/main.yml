@@ -1,0 +1,5 @@
+---
+# tasks file for openvpn-setup
+- name: Install packages
+  ansible.builtin.import_tasks: install-packages.yml
+
