@@ -12,7 +12,11 @@
 - name: Start the network
   virt_net:
     command: start
-    name: kvm_host.libvirt_bridge
+    name: "{{ kvm_host.libvirt_bridge }}"
 
-- name: Set network to autostart
-  command: "virsh net-autostart {{ kvm_host.libvirt_bridge }}"
+- name: Set autostart command as a fact
+  set_fact:
+    autostart_command: "virsh net-autostart {{ kvm_host.libvirt_bridge }}"
+
+- name: Run the autostart command
+  command: "{{ autostart_command }}"
