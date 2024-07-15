@@ -1,35 +1,37 @@
 ---
-- name: Install KVM on Ubuntu 24.04
-  hosts: localhost
-  become: yes
-  tasks:
-    - name: Update the APT package cache
-      ansible.builtin.apt:
-        update_cache: yes
+- name: Update the APT package cache
+  ansible.builtin.apt:
+    update_cache: yes
 
-    - name: Install KVM and dependencies
-      ansible.builtin.apt:
-        name:
-          - qemu-kvm
-          - libvirt-daemon-system
-          - libvirt-clients
-          - bridge-utils
-          - virt-manager
-          - tigervnc-viewer
-        state: present
+- name: Install KVM and dependencies
+  ansible.builtin.apt:
+    name:
+      - qemu-kvm
+      - libvirt-daemon-system
+      - libvirt-clients
+      - bridge-utils
+      - virt-manager
+      - tigervnc-viewer
+    state: present
 
-    - name: Ensure libvirtd service is enabled and started
-      ansible.builtin.systemd:
-        name: libvirtd
-        enabled: yes
-        state: started
+- name: Ensure libvirtd qemu security is disabled
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/qemu.conf
+    line: "security_driver = [ \"none\" ]"
+    state: present
 
-    - name: Add current user to libvirt and kvm groups
-      ansible.builtin.user:
-        name: "{{ lookup('env', 'USER') }}"
-        groups: libvirt,kvm
-        append: yes
+- name: Ensure libvirtd service is enabled and started
+  ansible.builtin.systemd:
+    name: libvirtd
+    enabled: yes
+    state: started
 
-    - name: Print message to log out and back in
-      ansible.builtin.debug:
-        msg: "Installation complete. Please log out and log back in to apply group changes."
+- name: Add current user to libvirt and kvm groups
+  ansible.builtin.user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: libvirt,kvm
+    append: yes
+
+- name: Print message to log out and back in
+  ansible.builtin.debug:
+    msg: "Installation complete. Please log out and log back in to apply group changes."

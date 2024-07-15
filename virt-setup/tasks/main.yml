@@ -1,18 +1,22 @@
 ---
 # tasks file for kvm-setup
+- name: KVM/Vagrant Enabled
+  ansible.builtin.debug:
+    msg: "{{ kvm.enabled }} {{ vagrant.enabled }}"
+
 - name: Disable KVM
   ansible.builtin.import_tasks: disable-kvm.yml
   when:
-    - kvm.enabled == false
+    - kvm.enabled != False
 
 - name: Enable KVM
   ansible.builtin.import_tasks: enable-kvm.yml
   when:
-    - kvm.enabled == true
-    - vagrant.enabled == false
+    - kvm.enabled == True
+    - vagrant.enabled == False
 
 - name: Install Vagrant
   ansible.builtin.import_tasks: install-vagrant.yml
   when:
-    - kvm.enabled == false
-    - vagrant.enabled == true
+    - kvm.enabled == False
+    - vagrant.enabled == True

@@ -1,3 +1,6 @@
+- name: Install KVM
+  ansible.builtin.import_tasks: install-kvm.yml
+
 - name: Whitelist KVM modules
   ansible.builtin.import_tasks: whitelist-modules.yml
 
