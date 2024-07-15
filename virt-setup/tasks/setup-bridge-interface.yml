@@ -1,5 +1,18 @@
-- name: Genarating bridge interface config
-  ansible.builtin.template:
-    src: etc/netplan/00-br0-config.yaml.j2
-    dest: /etc/netplan/00-br0-config.yaml
-    mode: '0644'
+- name: Define a new network
+  virt_net:
+    command: define
+    name: br0-default
+    xml: |
+      <network>
+        <name>{{ kvm_host.libvirt_bridge}}</name>
+        <forward mode='bridge'/>
+        <bridge name='br0'/>
+      </network>
+ 
+- name: Start the network
+  virt_net:
+    command: start
+    name: kvm_host.libvirt_bridge
+
+- name: Set network to autostart
+  command: "virsh net-autostart {{ kvm_host.libvirt_bridge }}"
