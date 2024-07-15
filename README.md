@@ -25,3 +25,7 @@ virsh net-list --all
 ```sh
 check if terraform libvirt plugin is installed or not
 ```
+
+## Make OpenVPN CA and utils
+```sh
+```
