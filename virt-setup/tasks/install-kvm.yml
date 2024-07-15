@@ -12,6 +12,12 @@
       - bridge-utils
       - virt-manager
       - tigervnc-viewer
+      - terraform
+      - git
+      - make
+      - gcc
+      - libvirt-dev
+      - golang  
     state: present
 
 - name: Ensure libvirtd qemu security is disabled
@@ -35,3 +41,22 @@
 - name: Print message to log out and back in
   ansible.builtin.debug:
     msg: "Installation complete. Please log out and log back in to apply group changes."
+
+- name: Clone the terraform-provider-libvirt repository
+  become: no
+  git:
+    repo: https://github.com/dmacvicar/terraform-provider-libvirt.git
+    dest: /tmp/terraform-provider-libvirt
+    version: main
+
+- name: Change directory and build the provider
+  command: make
+  become: no
+  args:
+    chdir: /tmp/terraform-provider-libvirt
+
+- name: Run make install
+  command: make install
+  become: no
+  args:
+    chdir: /tmp/terraform-provider-libvirt
