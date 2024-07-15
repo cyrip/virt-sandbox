@@ -21,7 +21,7 @@ virsh net-autostart br0-default
 virsh net-list --all
 ```
 
-## setup virsh net
+## Check libvirt plugin is installed
 ```sh
 check if terraform libvirt plugin is installed or not
 ```
