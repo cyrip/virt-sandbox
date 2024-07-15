@@ -1,0 +1,22 @@
+network:
+  ethernets:
+    {{ kvm_host.eth_interface }}:
+      dhcp4: no
+  bridges:
+    {{ kvm_host.bridge_interface }}:
+      interfaces: [{{ kvm_host.eth_interface }}]
+      addresses:
+{% for item in kvm_host.ipv4_addresses %}
+        - {{ item }}
+{% endfor %}
+      gateway4: {{ kvm_host.ipv4_gateway }}
+      nameservers:
+        addresses:
+{% for item in kvm_host.dns_nameservers %}
+          - {{ item }}
+{% endfor %}
+      parameters:
+        stp: false
+        forward-delay: 0
+  version: 2
+  renderer: networkd

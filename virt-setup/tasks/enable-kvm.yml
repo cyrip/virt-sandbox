@@ -6,3 +6,6 @@
 
 - name: Enable services
   ansible.builtin.import_tasks: enable-services.yml
+
+- name: Setup bridge interface
+  ansible.builtin.import_tasks: setup-bridge-interface.yml
